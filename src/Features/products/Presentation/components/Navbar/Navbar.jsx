@@ -13,8 +13,6 @@ import { RegisterPopup } from "../Popup/RegisterPopup";
 import { useAuthenticationStorage } from "../../../../user/data/local/user_local_data_sources";
 import { UserProfileModal } from '../Navbar/UserProfileModal';
 
-
-
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -31,8 +29,6 @@ export const Navbar = () => {
   const { shoppingCart, cleanShoppingCart } = useProductLocalStorage();
 
   console.log(shoppingCart)
-
-
   const Menu = [
     { id: 1, name: "Inicio", link: "/dashboard" },
     { id: 2, name: "Procesadores", link: "/procesadores" },
@@ -40,17 +36,16 @@ export const Navbar = () => {
     { id: 4, name: "Motherboards", link: "/motherboards" },
     { id: 5, name: "Periféricos", link: "/perifericos" },
 
-
   ];
 
   const DropdownLinks = [
     { id: 1, name: "Crear producto", link: "/create-product", showifAdmin: true },
     { id: 2, name: "Cooler", link: "/cooler", showifAdmin: false },
-    { id: 3, name: "Discos duros HDD", link: "/#discos-durosHDD", showifAdmin: false },
-    { id: 4, name: "Discos Solidos SSD", link: "/#discos-solidosSSD", showifAdmin: false },
-    { id: 5, name: "Fuentes", link: "/#fuentes", showifAdmin: false },
-    { id: 6, name: "Gabinetes", link: "/#gabinetes", showifAdmin: false },
-    { id: 7, name: "Memorias RAM", link: "/#memorias-RAM", showifAdmin: false },
+    { id: 3, name: "Discos duros HDD", link: "/discos-durosHDD", showifAdmin: false },
+    { id: 4, name: "Discos Solidos SSD", link: "/discos-solidosSSD", showifAdmin: false },
+    { id: 5, name: "Fuentes", link: "/fuentes", showifAdmin: false },
+    { id: 6, name: "Gabinetes", link: "/gabinetes", showifAdmin: false },
+    { id: 7, name: "Memorias RAM", link: "/memorias-RAM", showifAdmin: false },
 
   ];
 
@@ -91,7 +86,6 @@ export const Navbar = () => {
     DeleteUserSession();
   }
 
-
   return (
 
     <div className="shadow-md bg-orange-500 dark:bg-gray-900 dark:text-white duration-200 relative z-40">
@@ -109,6 +103,8 @@ export const Navbar = () => {
             </button>
           </div>
           
+          <div className="flex items-center gap-4">
+
           {/* Botón de Favoritos */}
           <button
             className="bg-gradient-to-r from-orange-500 to-orange-700 transition-all duration-200 text-white py-2 px-4 rounded-md flex items-center gap-2 group hover:from-orange-600 hover:to-orange-800 transform hover:scale-105"
@@ -116,9 +112,6 @@ export const Navbar = () => {
             <FaHeart className="text-xl text-white drop-shadow-sm cursor-pointer" />
             <span className="hidden sm:block group-hover:inline-block">Favoritos</span>
           </button>
-
-
-          <div className="flex items-center gap-4">
 
             {/* Botón compartir */}
             <div className="flex space-x-4 mt-0.8">
@@ -159,10 +152,8 @@ export const Navbar = () => {
 
               user && token ?
                 <>
-
                   <div className="relative flex items-center md:order-2 space-x-3 md:space-x-3 rtl:space-x-reverse">
 
-        
                     {/* Botón MI PERFIL */}
                     <button
                       className="flex items-center gap-2 px-4 py-2 rounded-md text-white bg-orange-500 border border-orange-500 
@@ -175,7 +166,6 @@ export const Navbar = () => {
                         {user.name} {user.lastname}
                       </span>
                     </button>
-
 
                     {/* Menu Dropdown */}
                     {isMenuOpen && (
@@ -289,7 +279,6 @@ export const Navbar = () => {
                 </ul>
               </div>
             </li>
-
 
             {isModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">

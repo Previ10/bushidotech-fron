@@ -5,6 +5,14 @@ import { ProcesorsPage } from '../../Features/products/Presentation/Pages/Proces
 import { PlacavideoPage } from '../../Features/products/Presentation/Pages/Placavideos_page';
 import { MotherboardsPage } from '../../Features/products/Presentation/Pages/Motherboards_page';
 import { PerifericosPage } from '../../Features/products/Presentation/Pages/Perifericos_page';
+import { CoolerPage } from '../../Features/products/Presentation/Pages/Cooler_page';
+import { DiscoHddPage } from '../../Features/products/Presentation/Pages/DiscosHdd_page';
+import { DiscosSsdPage } from '../../Features/products/Presentation/Pages/DiscosSdd_page';
+import { FuentePage } from '../../Features/products/Presentation/Pages/Fuente_page';
+import { GabinetePage } from '../../Features/products/Presentation/Pages/Gabinetes_pages';
+import { MemoriasRamPage } from '../../Features/products/Presentation/Pages/MemoriasRam_page';
+
+
 import ProductDetail from "../../Features/products/Presentation/procedetallado/ProductDetail";
 import ProductPlaca from "../../Features/products/Presentation/placadetallado/ProductPlaca";
 import ProductMother from "../../Features/products/Presentation/motherdetallado/ProductMother";
@@ -26,6 +34,13 @@ export const AppRouter = () => {
                     <Route path='/placadevideo' element={<PlacavideoPage />} />
                     <Route path='/motherboards' element={<MotherboardsPage />} />
                     <Route path='/perifericos' element={<PerifericosPage />} />
+                    <Route path='/cooler' element={<CoolerPage />} />
+                    <Route path='/discos-durosHDD' element={<DiscoHddPage />} />
+                    <Route path='/discos-solidosSSD' element={<DiscosSsdPage />} />
+                    <Route path='/fuentes' element={<FuentePage />} />
+                    <Route path='/gabinetes' element={<GabinetePage />} />
+                    <Route path='/memorias-RAM' element={<MemoriasRamPage />} />
+
                     <Route path="/terms-conditions" element={<TermsAndConditions />} />
 
                     <Route path="/create-product" element={

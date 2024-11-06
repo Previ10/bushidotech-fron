@@ -32,9 +32,8 @@ export const PopupRegisterSucess = ({setShowModal, setShowRegisterSucessModal}) 
                                     setShowModal(false);
                                 } }
                             >
-                                
+      
                                 Aceptar
-
 
                             </button>
                         </div>
