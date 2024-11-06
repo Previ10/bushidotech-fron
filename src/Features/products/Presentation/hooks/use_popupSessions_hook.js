@@ -26,6 +26,14 @@ export const usepopupSessionshook = (showModal, setShowModal) => {
   });
   const { SaveUserLocalData } = useAuthenticationStorage();
   const { loading, mutate, error, data } = useLoginMutationHook()
+  const [passwordVisible, setPasswordVisible] = useState(false)
+
+
+  const togglePassword =()=> {
+
+  setPasswordVisible(!passwordVisible);
+
+  } 
 
 
   const handleLoginClick = (values) => {
@@ -56,6 +64,8 @@ export const usepopupSessionshook = (showModal, setShowModal) => {
     handleChange,
     handleBlur,
     values,
-    touched
+    touched,
+    togglePassword,
+    passwordVisible,
   }
 }

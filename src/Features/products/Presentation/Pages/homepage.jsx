@@ -32,7 +32,6 @@ export const Homepage = () => {
     <TopProducts handleOrderPopup={handleOrderPopup} />
     <Banner />
     <Subscribe />
-    <Products />
     <Testimonials />
     <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
   </div>

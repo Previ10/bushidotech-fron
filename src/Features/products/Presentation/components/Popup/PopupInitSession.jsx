@@ -4,7 +4,9 @@ import Logo from "../../../../../assets/logopopup.png";
 
 export const PopupInitSession = ({ showModal, setShowModal, setShowRegisterModal }) => {
   const {
+    togglePassword,
     handleRegisterClick,
+    passwordVisible,
     handleSubmit,
     handleChange,
     handleBlur,
@@ -64,7 +66,7 @@ export const PopupInitSession = ({ showModal, setShowModal, setShowRegisterModal
                 </label>
                 <input
                   name="password"
-                  type="password"
+                  type={passwordVisible ? "text" : "password"}
                   id="password"
                   onChange={handleChange("password")}
                   value={values.password}
@@ -72,7 +74,9 @@ export const PopupInitSession = ({ showModal, setShowModal, setShowRegisterModal
                   className="w-full rounded-md border border-gray-300 dark:border-gray-500 dark:bg-gray-800 px-3 py-2 pl-4 mb-4"
                   required
                 />
-                <span className="absolute right-3 top-9 text-orange-500">
+                <span className="absolute right-3 top-9 text-orange-500" onClick={
+                  togglePassword
+                }>
                   🔒 {/* Add a lock icon here */}
                 </span>
                 {errors && errors.password && touched.password && (
