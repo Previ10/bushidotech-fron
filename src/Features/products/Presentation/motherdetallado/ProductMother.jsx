@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Slider from "react-slick";
-import { FaCheckCircle, FaTruck, FaShareAlt, FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa'; 
+import { FaCheckCircle, FaTruck, FaShareAlt, FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 
 
 
@@ -11,17 +11,18 @@ import { useProductLocalStorage } from '../data/local/products_local_data_source
 const ProductPlaca = () => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data:product, loading, error } = useGetProductByIdQueryHook(id);
-  const {setProductsInShoppingCart} = useProductLocalStorage();
-  const handleAddProductToShoppingCart = ()=> {
+  const { data: product, loading, error } = useGetProductByIdQueryHook(id);
+  const { setProductsInShoppingCart } = useProductLocalStorage();
+  const handleAddProductToShoppingCart = () => {
     setProductsInShoppingCart([product]);
     console.log(product);
 
   }
   const images = [
-       product?.image
-        ];
+    product?.image
+  ];
 
+  console.log(product);
 
   const settings = {
     dots: true,
@@ -101,9 +102,9 @@ const ProductPlaca = () => {
             >
               <FaShareAlt className="mr-2" /> Compartir
             </button>
-            <button 
-            onClick={handleAddProductToShoppingCart}
-            className="w-full md:w-auto bg-orange-600 text-white text-lg px-8 py-4 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out shadow-lg">
+            <button
+              onClick={handleAddProductToShoppingCart}
+              className="w-full md:w-auto bg-orange-600 text-white text-lg px-8 py-4 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out shadow-lg">
               Sumar al Carrito
             </button>
           </div>
@@ -118,26 +119,30 @@ const ProductPlaca = () => {
       <div className="mt-12">
         <h3 className="text-2xl font-bold mb-6 text-gray-800">Descripción Detallada</h3>
         <div className="grid grid-cols-2 gap-8 border-b-2 pb-6 mb-6">
-          <div>
+          <div >
             <h4 className="font-semibold text-lg text-gray-700">General</h4>
-            <ul className="mt-3 space-y-2 text-gray-600">
-              <li>Socket: {product?.details?.general?.socket}</li>
-              <li>Chipset: {product?.details?.general?.chipset}</li>
-              <li>Memoria: {product?.details?.general?.memory}</li>
-              <li>Slots de Expansión: {product?.details?.general?.expansionSlots}</li>
-              <li>Almacenamiento: {product?.details?.general?.storage}</li>
-              <li>Red: {product?.details?.general?.network}</li>
-              <li>Audio: {product?.details?.general?.audio}</li>
-            </ul>?
+            <ul className="mt-3 space-y-2 text-gray-600 ">
+              {
+                product?.features?.general.map((feature) => {
+                  return (<li> {
+                    feature
+                  } </li>)
+
+                })
+              }
+            </ul>
           </div>
           <div>
             <h4 className="font-semibold text-lg text-gray-700">Conectividad</h4>
             <ul className="mt-3 space-y-2 text-gray-600">
-              <li>VGA: {product?.details?.connectivity?.vga}</li>
-              <li>DVI: {product?.details?.connectivity?.dvi}</li>
-              <li>HDMI: {product?.details?.connectivity?.hdmi}</li>
-              <li>Puertos Display: {product?.details?.connectivity?.displayPorts}</li>
-              <li>USB Tipo-C: {product?.details?.connectivity?.usbTypeC}</li>
+              {
+                product?.features?.conectividad.map((feature) => {
+                  return (<li> {
+                    feature
+                  } </li>)
+
+                })
+              }
             </ul>
           </div>
         </div>
@@ -145,21 +150,34 @@ const ProductPlaca = () => {
           <div>
             <h4 className="font-semibold text-lg text-gray-700">Consumo de Energía</h4>
             <ul className="mt-3 space-y-2 text-gray-600">
-              <li>Consumo energético: {product?.details?.power?.energyConsumption}</li>
-              <li>Recomendación de fuente: {product?.details?.power?.recommendedPower}</li>
+
+              {
+                product?.features?.consumoEnergia.map((feature) => {
+                  return (<li> {
+                    feature
+                  } </li>)
+
+                })
+              }
+
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-lg text-gray-700">Dimensiones</h4>x
+            <h4 className="font-semibold text-lg text-gray-700">Dimensiones</h4>
             <ul className="mt-3 space-y-2 text-gray-600">
-              <li>Longitud: {product?.details?.dimensions?.length}</li>
-              <li>Ancho: {product?.details?.dimensions?.width}</li>
-              <li>Espesor: {product?.details?.dimensions?.thickness}</li>
+              {
+                product?.features?.dimensiones.map((feature) => {
+                  return (<li> {
+                    feature
+                  } </li>)
+
+                })
+              }
             </ul>
           </div>
         </div>
       </div>
-    
+
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-11/12 max-w-lg relative shadow-lg">
@@ -174,34 +192,34 @@ const ProductPlaca = () => {
               readOnly
               className="border rounded-lg w-full p-2 text-gray-800 mb-4"
             />
-            <button 
+            <button
               onClick={() => {
                 navigator.clipboard.writeText(productUrl);
                 alert('Enlace copiado al portapapeles!');
-              }} 
+              }}
               className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-300 ease-in-out mb-4"
             >
               Copiar enlace
             </button>
-            
+
             <div className="my-4 border-t pt-4">
               <h3 className="font-semibold text-lg">Resumen del Producto</h3>
               <p className="text-gray-600">{product?.description}</p>
             </div>
-            
+
             <h3 className="font-semibold text-lg">Comparte en:</h3>
             <div className="flex space-x-4 mt-2">
               <a href={`https://www.facebook.com/sharer/sharer.php?u=${productUrl}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
-                <FaFacebook size={24} /> 
+                <FaFacebook size={24} />
               </a>
               <a href={`https://twitter.com/intent/tweet?url=${productUrl}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-600">
-                <FaTwitter size={24} /> 
+                <FaTwitter size={24} />
               </a>
               <a href={`https://wa.me/?text=${productUrl}`} target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-700">
-              <FaWhatsapp size={24} /> 
+                <FaWhatsapp size={24} />
               </a>
             </div>
-            
+
             <button onClick={closeModal} className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out mt-4">
               Cerrar
             </button>

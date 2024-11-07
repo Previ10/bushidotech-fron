@@ -6,7 +6,7 @@ export const RouterGuard = ({children}) => {
     
     const {user} = useAuthenticationStorage();
 
-     if(user.rol.includes("admin")){
+     if(user?.rol.includes("admin")){
 
         return children ;
      }

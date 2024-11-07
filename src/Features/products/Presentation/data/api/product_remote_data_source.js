@@ -5,7 +5,6 @@ mutation CreateProduct($createProductInput: CreateProductInput!) {
   createProduct(createProductInput: $createProductInput) {
     brand
     description
-    features
     garantia
     id
     image
@@ -13,6 +12,12 @@ mutation CreateProduct($createProductInput: CreateProductInput!) {
     precio
     stock
     type
+    features {
+      general
+      dimensiones
+      consumoEnergia
+      conectividad
+    }
    
   }
 }
@@ -30,7 +35,12 @@ export const GetProductQuery = gql`
         image
         id
         garantia
-        features
+        features {
+          general
+          dimensiones
+          consumoEnergia
+          conectividad
+        }
         description
         brand
       }
@@ -48,7 +58,12 @@ query Query($getProductByidId: ID!) {
     image
     id
     garantia
-    features
+    features {
+        general
+        dimensiones
+        consumoEnergia
+        conectividad
+      }
     description
     brand
   }

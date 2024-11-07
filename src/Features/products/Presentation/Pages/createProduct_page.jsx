@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCreateProductController } from '../hooks/use_create_product_controller_hook';
+import { AccordionComponent } from '../../../../core/utils/accordition'
 
 export const CreateProductPage = () => {
   const {
@@ -11,9 +12,17 @@ export const CreateProductPage = () => {
     touched,
     loading,
     data,
-    handleFileChange
+    handleFileChange,
+    features,
+    selectedCategory,
+    setSelectedCategory,
+    currentFeature,
+    setCurrentFeature,
+    handleAddFeature,
+    handleRemoveFeature
   } = useCreateProductController();
 
+  console.log("Data es true ", data)
   return (
     <>
       <div className="min-h-screen flex bg-gray-100 dark:bg-gray-900">
@@ -46,9 +55,6 @@ export const CreateProductPage = () => {
                   },
                   { label: "Precio", name: "precio", type: "number" },
                   { label: "Stock", name: "stock", type: "number" },
-                  { label: "Características", name: "features", type: "text" },
-                  // El campo select para la garantía
-
                   {
                     label: "Garantía", name: "garantia", type: "select", options: [
                       { value: "Garantia de 3 meses", label: "Garantía de 3 meses" },
@@ -151,6 +157,59 @@ export const CreateProductPage = () => {
                   );
                 })}
               </div>
+
+              <AccordionComponent title="Características">
+                <div className="space-y-4">
+                  <div className="flex space-x-2">
+                    <select
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="border rounded px-2 py-1"
+                    >
+                      <option value="general">General</option>
+                      <option value="conectividad">Conectividad</option>
+                      <option value="consumoEnergia">Consumo de Energía</option>
+                      <option value="dimensiones">Dimensiones</option>
+                    </select>
+                    <input
+                      type="text"
+                      value={currentFeature}
+                      onChange={(e) => setCurrentFeature(e.target.value)}
+                      placeholder="Agregar característica"
+                      className="border rounded px-2 py-1"
+                    />
+                    {}
+                    <button
+                      type="button"
+                      onClick={handleAddFeature}
+                      className="px-3 py-1 bg-blue-500 text-white rounded"
+                      disabled={features[selectedCategory].length >= 5 || !currentFeature}
+                    >
+                      Agregar
+                    </button>
+                  </div>
+                  {Object.keys(features).map((category) => (
+                    <div key={category}>
+                      <h3 className="font-semibold capitalize mb-2">{category}</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {features[category].map((feature, index) => (
+                          <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded-full text-sm">
+                            {feature}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveFeature(category, index)}
+                              className="ml-2 text-red-500 focus:outline-none"
+                            >
+                              &times;
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </AccordionComponent>
+              {/* Botón de envío del formulario */}
               <div className="flex flex-col space-y-2">
                 <button
                   type="submit"
@@ -169,8 +228,6 @@ export const CreateProductPage = () => {
             </form>
           </div>
         </div>
-
-        {/* Columna para mostrar la información del producto */}
         {data && (
           <div className="w-full md:w-1/2 flex items-center justify-center">
             <div className="relative p-6 shadow-md bg-white dark:bg-gray-900 rounded-lg duration-200 w-[90%] max-w-[600px]">
@@ -182,7 +239,7 @@ export const CreateProductPage = () => {
                 <p><strong>Tipo:</strong> {data.createProduct.type || 'N/A'}</p>
                 <p><strong>Precio:</strong> {data.createProduct.precio ? `$${data.createProduct.precio}` : 'N/A'}</p>
                 <p><strong>Stock:</strong> {data.createProduct.stock || 'N/A'}</p>
-                <p><strong>Características:</strong> {data.createProduct.features || 'N/A'}</p>
+                {/* <p><strong>Características:</strong> {data.createProduct.features || 'N/A'}</p> */}
                 <p><strong>Garantía:</strong> {data.createProduct.garantia || 'N/A'}</p>
                 {data.createProduct.image && (
                   <div className="mt-4">
@@ -202,3 +259,5 @@ export const CreateProductPage = () => {
     </>
   );
 };
+
+
