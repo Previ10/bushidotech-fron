@@ -103,10 +103,6 @@ export const Popup = ({ orderPopup, setOrderPopup, shoppingCart, cleanShoppingCa
 };
 
 
-
-
-
-
 // MERCADO PAGO
 
 // import "./Product.css";
