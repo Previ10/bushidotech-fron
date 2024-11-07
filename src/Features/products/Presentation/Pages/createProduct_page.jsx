@@ -158,6 +158,23 @@ export const CreateProductPage = () => {
                 })}
               </div>
 
+              <div className="flex flex-col space-y-2">
+                <button
+                  type="submit"
+                  className="block w-full px-4 py-2 border from-primary to-secondary hover:scale-105 bg-gradient-to-r text-white rounded-lg"
+                >
+                  {loading ? "Cargando..." : "Crear Producto"}
+                </button>
+                <button
+                  type="button"
+                  className="block w-full px-4 py-2 border from-primary to-secondary hover:scale-105 bg-gradient-to-r text-white rounded-lg"
+                  onClick={() => window.history.back()}
+                >
+                  Cancelar
+                </button>
+              </div>
+              </form>
+
               <AccordionComponent title="Características">
                 <div className="space-y-4">
                   <div className="flex space-x-2">
@@ -210,22 +227,7 @@ export const CreateProductPage = () => {
                 </div>
               </AccordionComponent>
               {/* Botón de envío del formulario */}
-              <div className="flex flex-col space-y-2">
-                <button
-                  type="submit"
-                  className="block w-full px-4 py-2 border from-primary to-secondary hover:scale-105 bg-gradient-to-r text-white rounded-lg"
-                >
-                  {loading ? "Cargando..." : "Crear Producto"}
-                </button>
-                <button
-                  type="button"
-                  className="block w-full px-4 py-2 border from-primary to-secondary hover:scale-105 bg-gradient-to-r text-white rounded-lg"
-                  onClick={() => window.history.back()}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
+             
           </div>
         </div>
         {data && (
