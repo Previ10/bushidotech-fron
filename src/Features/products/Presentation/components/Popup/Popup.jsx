@@ -101,3 +101,50 @@ export const Popup = ({ orderPopup, setOrderPopup, shoppingCart, cleanShoppingCa
     </>
   );
 };
+
+
+// MERCADO PAGO
+
+// import "./Product.css";
+// import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+// import axios from "axios";
+// import { useState } from "react";
+
+// const Product = () => {
+//     const [preferenceId, setPreferenceId] = useState(null);
+
+//     initMercadoPago("YOUR_PUBLIC_KEY", {
+//         locale: "es-AR",
+//     });
+
+//     const createPreference = async () => {
+//         try {
+//             const response = await axios.post("http://localhost:3000/create_preference", {
+//                 title: "Bushido",
+//                 quantity: 1,
+//                 price: 550,
+//             });
+//             setPreferenceId(response.data.preferenceId);
+//         } catch (error) {
+//             console.error("Error creating preference:", error);
+//         }
+//     };
+
+//     return (
+//         <div>
+//             <button onClick={createPreference}>Create Preference</button>
+//             {preferenceId && <Wallet initialization={{ preferenceId }} />}
+//         </div>
+//     );
+// };
+
+// export default Product;
+
+
+
+// const handleBuy = async () => {
+//   const id = await createPreference();
+//   if (id) {
+//       setPreferenceId(id);
+//   }
+// };
