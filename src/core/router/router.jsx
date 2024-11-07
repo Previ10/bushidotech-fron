@@ -5,7 +5,6 @@ import { ProcesorsPage } from '../../Features/products/Presentation/Pages/Proces
 import { PlacavideoPage } from '../../Features/products/Presentation/Pages/Placavideos_page';
 import { MotherboardsPage } from '../../Features/products/Presentation/Pages/Motherboards_page';
 import { PerifericosPage } from '../../Features/products/Presentation/Pages/Perifericos_page';
-<<<<<<< HEAD
 import { CoolerPage } from '../../Features/products/Presentation/Pages/Cooler_page';
 import { DiscoHddPage } from '../../Features/products/Presentation/Pages/DiscosHdd_page';
 import { DiscosSsdPage } from '../../Features/products/Presentation/Pages/DiscosSdd_page';
@@ -14,8 +13,6 @@ import { GabinetePage } from '../../Features/products/Presentation/Pages/Gabinet
 import { MemoriasRamPage } from '../../Features/products/Presentation/Pages/MemoriasRam_page';
 
 
-=======
->>>>>>> ecaf10a07ff2bed3e407c034477b6a9b11d30dff
 import ProductDetail from "../../Features/products/Presentation/procedetallado/ProductDetail";
 import ProductPlaca from "../../Features/products/Presentation/placadetallado/ProductPlaca";
 import ProductMother from "../../Features/products/Presentation/motherdetallado/ProductMother";
