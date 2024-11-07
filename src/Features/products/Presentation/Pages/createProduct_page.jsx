@@ -176,57 +176,56 @@ export const CreateProductPage = () => {
               </form>
 
               <AccordionComponent title="Características">
-                <div className="space-y-4">
-                  <div className="flex space-x-2">
-                    <select
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="border rounded px-2 py-1"
-                    >
-                      <option value="general">General</option>
-                      <option value="conectividad">Conectividad</option>
-                      <option value="consumoEnergia">Consumo de Energía</option>
-                      <option value="dimensiones">Dimensiones</option>
-                    </select>
-                    <input
-                      type="text"
-                      value={currentFeature}
-                      onChange={(e) => setCurrentFeature(e.target.value)}
-                      placeholder="Agregar característica"
-                      className="border rounded px-2 py-1"
-                    />
-                    {}
-                    <button
-                      type="button"
-                      onClick={handleAddFeature}
-                      className="px-3 py-1 bg-blue-500 text-white rounded"
-                      disabled={features[selectedCategory].length >= 5 || !currentFeature}
-                    >
-                      Agregar
-                    </button>
-                  </div>
-                  {Object.keys(features).map((category) => (
-                    <div key={category}>
-                      <h3 className="font-semibold capitalize mb-2">{category}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {features[category].map((feature, index) => (
-                          <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded-full text-sm">
-                            {feature}
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveFeature(category, index)}
-                              className="ml-2 text-red-500 focus:outline-none"
-                            >
-                              &times;
-                            </button>
-                          </div>
-                        ))}
-                      </div>
+              <div className="flex space-x-2">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="border rounded px-2 py-1 w-1/3 dark:bg-gray-800 dark:text-white"
+                >
+                  <option value="general">General</option>
+                  <option value="conectividad">Conectividad</option>
+                  <option value="consumoEnergia">Consumo de Energía</option>
+                  <option value="dimensiones">Dimensiones</option>
+                </select>
+                <input
+                  type="text"
+                  value={currentFeature}
+                  onChange={(e) => setCurrentFeature(e.target.value)}
+                  placeholder="Agregar característica"
+                  className="border rounded px-2 py-1 w-1/3 dark:bg-gray-800 dark:text-white"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddFeature}
+                  className="px-3 py-1 bg-blue-500 text-white rounded w-1/3"
+                  disabled={features[selectedCategory].length >= 5 || !currentFeature}
+                >
+                  Agregar
+                </button>
+              </div>
+
+              <div className="mt-6 space-y-6">
+                {Object.keys(features).map((category) => (
+                  <div key={category} className="space-y-2">
+                    <h3 className="font-semibold capitalize mb-2">{category}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {features[category].map((feature, index) => (
+                        <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded-full text-sm">
+                          {feature}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveFeature(category, index)}
+                            className="ml-2 text-red-500 focus:outline-none"
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </AccordionComponent>
-              {/* Botón de envío del formulario */}
+                  </div>
+                ))}
+              </div>
+            </AccordionComponent>
              
           </div>
         </div>
