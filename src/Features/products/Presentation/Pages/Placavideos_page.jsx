@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useGetProductQueryHook } from '../hooks/use_get_product_query_hook';
 import emptyProductImgPlaceHolder from '../../../../assets/no-product-found.jpg';
 import emptyProductImg from '../../../../assets/emptyProductImg.png';
+import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
+import { useDeleteProductMutationHook } from '../hooks/use_delete_product_mutation_hook';
 
 
 export const PlacavideoPage = () => {
-  const { data:products, error, loading } = useGetProductQueryHook({category:"Placas de Video"});
+  const { data:products, error, loading, refetch } = useGetProductQueryHook({category:"Placas de Video"});
   console.log("DATA DE PRODUCTOS",  products);
+
+  const { mutate } = useDeleteProductMutationHook();
+  const { DeleteUserSession, user, token } = useAuthenticationStorage();
+  const handleDeleteProduct = async (e, productId) => {
+    e.preventDefault();
+    await mutate(productId);
+    refetch();
+  };
+  const isAdmin = user?.rol?.includes("admin");
 
 
   const categories = [
@@ -67,15 +78,27 @@ export const PlacavideoPage = () => {
                 <Link to={`/motherboards/${product.id}`} key={product.id} className="relative">
                   <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col relative">
                     {/* Corazón en la esquina superior derecha */}
+                    <div className="absolute top-2 right-2 flex space-x-2 z-10">
                     <button
                       onClick={(e) => toggleFavorite(e, product.id)}
-                      className="absolute top-2 right-2 text-gray-400 hover:text-red-500 focus:outline-none z-10"
+                      className="text-gray-400 hover:text-red-500 focus:outline-none"
                     >
                       <FontAwesomeIcon
                         icon={faHeart}
                         className={favoriteProducts[product.id] ? 'text-red-500' : 'text-gray-400'}
                       />
                     </button>
+
+                    {/* Mostrar botón de borrar solo si el rol es admin */}
+                    {isAdmin && (
+                      <button
+                        onClick={(e) => handleDeleteProduct(e, product.id)}
+                        className="text-gray-400 hover:text-red-500 focus:outline-none"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    )}
+                  </div>
                     <img className="w-full" src={product.image !== '' ? product.image : emptyProductImg} alt={product.name} />
                     <div className="px-6 py-4 flex-grow">
                       <div className="font-semibold text-xl mb-2 text-gray-800">{product.name}</div>

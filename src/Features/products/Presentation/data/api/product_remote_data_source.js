@@ -22,7 +22,11 @@ mutation CreateProduct($createProductInput: CreateProductInput!) {
   }
 }
 `
-
+export const DeleteProductMutation = gql`
+mutation DeleteProduct($deleteProductId: String!) {
+  deleteProduct(id: $deleteProductId)
+}
+`
 export const GetProductQuery = gql`
   query GetProducts($offset: Int, $limit: Int, $search: String) {
     getProducts(offset: $offset, limit: $limit, search: $search) {
