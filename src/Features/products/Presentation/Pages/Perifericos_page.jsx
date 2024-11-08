@@ -102,7 +102,8 @@ export const PerifericosPage = () => {
                     <div className="px-6 py-4 flex-grow">
                       <div className="font-semibold text-xl mb-2 text-gray-800">{product.name}</div>
                       <p className="text-gray-600 text-base">
-                        Precio: <span className="text-orange-500">{product.price}</span> (Antes: <span className="line-through text-gray-400">{product.previousPrice}</span>)
+                        Precio: <span className="text-orange-500 font-bold">{product?.precio}</span> 
+                        {/* (Antes: <span className="line-through text-gray-400">{product.previousPrice}</span>) */}
                       </p>
                     </div>
                     <div className="px-6 py-4">
