@@ -68,7 +68,7 @@ export const FuentePage = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {products?.map((product) => (
-              <Link to={`/fuentes/${product.id}`} key={product.id} className="relative">
+              <Link to={`/motherboards/${product.id}`} key={product.id} className="relative">
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col relative">
                   {/* Corazón en la esquina superior derecha */}
                   <button
