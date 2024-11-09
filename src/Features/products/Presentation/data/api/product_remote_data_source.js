@@ -27,6 +27,12 @@ mutation DeleteProduct($deleteProductId: String!) {
   deleteProduct(id: $deleteProductId)
 }
 `
+
+export const CreatePreferenceMutation = gql`
+mutation Mutation($createPreferenceInput: CreatePreferenceDto!) {
+  createPreference(createPreferenceInput: $createPreferenceInput)
+}
+`
 export const GetProductQuery = gql`
   query GetProducts($offset: Int, $limit: Int, $search: String) {
     getProducts(offset: $offset, limit: $limit, search: $search) {
