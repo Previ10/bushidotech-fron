@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useGetProductQueryHook } from '../hooks/use_get_product_query_hook';
 import emptyProductImgPlaceHolder from '../../../../assets/no-product-found.jpg';
 import emptyProductImg from '../../../../assets/emptyProductImg.png';
-import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
+import { useGetProductQueryHook } from '../hooks/use_get_product_query_hook';
 import { useDeleteProductMutationHook } from '../hooks/use_delete_product_mutation_hook';
+import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
 import SkeletonLoader from '../../../../core/utils/squeletonLoader';
 
+export const SearchPage = () => {
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(""); 
+ 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get("query") || "";
+    setSearchQuery(query);
+  }, [location.search]);
 
+ 
+  const { data: products, error, loading, refetch } = useGetProductQueryHook({ searchInput: searchQuery });
 
-export const PlacavideoPage = () => {
-  const { data:products, error, loading, refetch } = useGetProductQueryHook({category:"Placas de Video"});
-  console.log("DATA DE PRODUCTOS",  products);
-
+  useEffect(() => {
+    if (searchQuery) {
+      refetch();
+    }
+  }, [searchQuery, refetch]);
   const { mutate } = useDeleteProductMutationHook();
+  
+  
   const { DeleteUserSession, user, token } = useAuthenticationStorage();
   const handleDeleteProduct = async (e, productId) => {
     e.preventDefault();
@@ -23,7 +37,7 @@ export const PlacavideoPage = () => {
     refetch();
   };
   const isAdmin = user?.rol?.includes("admin");
-
+  console.log("DATA DE PRODUCTOS",  products);
 
   const categories = [
     'Componentes de PC',
@@ -38,7 +52,6 @@ export const PlacavideoPage = () => {
     'Procesadores'
   ];
 
-  // Estado para los productos favoritos
   const [favoriteProducts, setFavoriteProducts] = useState({});
 
   const toggleFavorite = (e, productId) => {
@@ -68,10 +81,9 @@ export const PlacavideoPage = () => {
 
       {/* Product Grid */}
       <div className="flex-grow p-10 bg-gray-50">
-        <h1 className="text-center text-4xl font-semibold mb-12 text-orange-500">Placas de Video</h1>
+        <h1 className="text-center text-4xl font-semibold mb-12 text-orange-500">Resultados de la busqueda</h1>
 
         {loading ? (
-          // Mostrar loaders mientras los datos están cargando
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {[...Array(6)].map((_, index) => (
               <SkeletonLoader key={index} />
@@ -88,18 +100,17 @@ export const PlacavideoPage = () => {
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col relative">
                   <div className="absolute top-2 right-2 flex space-x-2 z-10">
                     <button
-                      onClick={(e) => toggleFavorite(e, product.id)}
+                      onClick={(e) => toggleFavorite(e, product?.id)}
                       className="text-gray-400 hover:text-red-500 focus:outline-none"
                     >
                       <FontAwesomeIcon
                         icon={faHeart}
-                        className={favoriteProducts[product.id] ? 'text-red-500' : 'text-gray-400'}
+                        className={favoriteProducts[product?.id] ? 'text-red-500' : 'text-gray-400'}
                       />
                     </button>
-
                     {isAdmin && (
                       <button
-                        onClick={(e) => handleDeleteProduct(e, product.id)}
+                        onClick={(e) => handleDeleteProduct(e, product?.id)}
                         className="text-gray-400 hover:text-red-500 focus:outline-none"
                       >
                         <FontAwesomeIcon icon={faTrash} />
@@ -107,15 +118,15 @@ export const PlacavideoPage = () => {
                     )}
                   </div>
 
-                  <img className="w-full" src={product.image !== '' ? product.image : emptyProductImg} alt={product.name} />
+                  <img className="w-full" src={product?.image !== '' ? product?.image : emptyProductImg} alt={product?.name} />
                   <div className="px-6 py-4 flex-grow">
-                    <div className="font-semibold text-xl mb-2 text-gray-800">{product.name}</div>
+                    <div className="font-semibold text-xl mb-2 text-gray-800">{product?.name}</div>
                     <p className="text-gray-600 text-base">
-                      Precio: <span className="text-orange-500 font-bold">{product?.precio}</span>
+                      Precio: <span className="text-orange-500 font-bold">{product?.precio}</span> 
                     </p>
                   </div>
                   <div className="px-6 py-4">
-                    {product.stock > 0 ? (
+                    {product?.stock > 0 ? (
                       <span className="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-green-700">
                         Disponible
                       </span>

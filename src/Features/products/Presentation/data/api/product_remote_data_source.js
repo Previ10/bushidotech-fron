@@ -34,28 +34,28 @@ mutation Mutation($createPreferenceInput: CreatePreferenceDto!) {
 }
 `
 export const GetProductQuery = gql`
-  query GetProducts($offset: Int, $limit: Int, $search: String) {
-    getProducts(offset: $offset, limit: $limit, search: $search) {
-      itemCount
-      items {
-        type
-        stock
-        precio
-        name
-        image
-        id
-        garantia
-        features {
-          general
-          dimensiones
-          consumoEnergia
-          conectividad
-        }
-        description
-        brand
+query GetProducts($filterName: String, $search: String, $limit: Int, $offset: Int) {
+  getProducts(filterName: $filterName, search: $search, limit: $limit, offset: $offset) {
+    items {
+      type
+      stock
+      precio
+      name
+      image
+      id
+      garantia
+      features {
+        general
+        consumoEnergia
+        dimensiones
+        conectividad
       }
+      description
+      brand
     }
+    itemCount
   }
+}
 `;
 
 export const GetProductByIdQuery = gql`

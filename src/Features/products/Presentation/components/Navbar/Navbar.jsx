@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../../../../assets/LogoBus.png";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping, FaUser } from "react-icons/fa6";
@@ -7,7 +7,7 @@ import { FaCaretDown, FaBars } from "react-icons/fa";
 import { DarkMode } from "./DarkMode";
 import { PopupInitSession } from "../Popup/PopupInitSession";
 import { Popup } from "../Popup/Popup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PopupRegisterSucess } from "../Popup/PopupRegisterSucess";
 import { RegisterPopup } from "../Popup/RegisterPopup";
 import { useAuthenticationStorage } from "../../../../user/data/local/user_local_data_sources";
@@ -23,10 +23,37 @@ import {
 } from "react-share";
 import { FaCheckCircle, FaTruck, FaShareAlt } from 'react-icons/fa';
 import { useProductLocalStorage } from "../../data/local/products_local_data_sources";
+import { useGetProductQueryHook } from "../../hooks/use_get_product_query_hook";
 
 export const Navbar = () => {
-
+  const navigate = useNavigate();
   const { shoppingCart, cleanShoppingCart } = useProductLocalStorage();
+  
+  const [searchInput, setSearchInput] = useState(""); 
+    const [shouldFetch, setShouldFetch] = useState(false); 
+
+
+  const { data: products, error, loading, refetch } = useGetProductQueryHook({
+    searchInput: shouldFetch ? searchInput : "",
+  });
+
+  useEffect(() => {
+    if (shouldFetch) {
+      refetch();
+      setShouldFetch(false); 
+    }
+  }, [shouldFetch, refetch]);
+
+  const handleSearchChange = (event) => {
+    setSearchInput(event.target.value); 
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && searchInput.trim()) {
+      navigate(`/buscar?query=${encodeURIComponent(searchInput.trim())}`);
+      setShouldFetch(true);
+    }
+  };
 
   console.log(shoppingCart)
   const Menu = [
@@ -126,6 +153,9 @@ export const Navbar = () => {
             {/* Barra de Búsqueda */}
             <div className="relative group hidden sm:block">
               <input
+ value={searchInput}
+ onChange={handleSearchChange}
+ onKeyDown={handleKeyDown}
                 type="text"
                 placeholder="Buscar"
                 maxLength={30}

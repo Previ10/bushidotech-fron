@@ -7,6 +7,7 @@ import { FaCheckCircle, FaTruck, FaShareAlt, FaFacebook, FaTwitter, FaWhatsapp }
 
 import { useGetProductByIdQueryHook } from '../hooks/use_get_product_by_id_hook';
 import { useProductLocalStorage } from '../data/local/products_local_data_sources';
+import ProductDetailSkeleton from '../../../../core/utils/detailSqueletonLoader';
 
 const ProductPlaca = () => {
   const { id } = useParams();
@@ -21,6 +22,10 @@ const ProductPlaca = () => {
   const images = [
     product?.image
   ];
+ 
+  if (loading) {
+    return <ProductDetailSkeleton />; // Renderiza ProductDetailSkeleton cuando loading es true
+  }
 
   console.log(product);
 

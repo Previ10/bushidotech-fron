@@ -20,6 +20,7 @@ import ProductPeriferico from "../../Features/products/Presentation/perifericode
 import TermsAndConditions from "../../Features/products/Presentation/Pages/TermsAndConditions";
 import { CreateProductPage } from '../../Features/products/Presentation/Pages/createProduct_page';
 import { RouterGuard } from './router_guard';
+import { SearchPage } from '../../Features/products/Presentation/Pages/SearchPage';
 
 
 export const AppRouter = () => {
@@ -30,6 +31,7 @@ export const AppRouter = () => {
                 <Routes>
                     <Route path="/" element={<Navigate to="/dashboard" />} />
                     <Route path='/dashboard' element={<Homepage />} />
+                    <Route path='/buscar' element={<SearchPage />} />
                     <Route path='/procesadores' element={<ProcesorsPage />} />
                     <Route path='/placadevideo' element={<PlacavideoPage />} />
                     <Route path='/motherboards' element={<MotherboardsPage />} />

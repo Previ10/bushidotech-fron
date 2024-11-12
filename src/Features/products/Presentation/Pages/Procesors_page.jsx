@@ -7,6 +7,7 @@ import emptyProductImg from '../../../../assets/emptyProductImg.png';
 import { useGetProductQueryHook } from '../hooks/use_get_product_query_hook';
 import { useDeleteProductMutationHook } from '../hooks/use_delete_product_mutation_hook';
 import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
+import SkeletonLoader from '../../../../core/utils/squeletonLoader';
 
 export const ProcesorsPage = () => {
   const { data:products, error, loading ,refetch  } = useGetProductQueryHook({category:"Procesadores"});
@@ -63,19 +64,24 @@ export const ProcesorsPage = () => {
       {/* Product Grid */}
       <div className="flex-grow p-10 bg-gray-50">
         <h1 className="text-center text-4xl font-semibold mb-12 text-orange-500">Procesadores</h1>
-       
-        {
-          products?.length === 0 || products === undefined?
-            <div className='w-full h-full flex items-center justify-center'>
-               <img className='object-contain w-full h-full' src={emptyProductImgPlaceHolder} /></div>
-            :
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {products?.map((product) => (
-                <Link to={`/motherboards/${product.id}`} key={product.id} className="relative">
-                  <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col relative">
-                    {/* Corazón en la esquina superior derecha */}
-                    
-                    <div className="absolute top-2 right-2 flex space-x-2 z-10">
+
+        {loading ? (
+          // Mostrar loaders mientras los datos están cargando
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {[...Array(6)].map((_, index) => (
+              <SkeletonLoader key={index} />
+            ))}
+          </div>
+        ) : products?.length === 0 || products === undefined ? (
+          <div className='w-full h-full flex items-center justify-center'>
+            <img className='object-contain w-full h-full' src={emptyProductImgPlaceHolder} alt="No products found" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {products?.map((product) => (
+              <Link to={`/motherboards/${product.id}`} key={product.id} className="relative">
+                <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col relative">
+                  <div className="absolute top-2 right-2 flex space-x-2 z-10">
                     <button
                       onClick={(e) => toggleFavorite(e, product.id)}
                       className="text-gray-400 hover:text-red-500 focus:outline-none"
@@ -86,7 +92,6 @@ export const ProcesorsPage = () => {
                       />
                     </button>
 
-                    {/* Mostrar botón de borrar solo si el rol es admin */}
                     {isAdmin && (
                       <button
                         onClick={(e) => handleDeleteProduct(e, product.id)}
@@ -97,33 +102,30 @@ export const ProcesorsPage = () => {
                     )}
                   </div>
 
-                    <img className="w-full" src={product.image !== '' ? product.image : emptyProductImg} alt={product.name} />
-                    <div className="px-6 py-4 flex-grow">
-                      <div className="font-semibold text-xl mb-2 text-gray-800">{product.name}</div>
-                      <p className="text-gray-600 text-base">
-                        Precio: <span className="text-orange-500 font-bold">{product?.precio}</span> 
-                        {/* (Antes: <span className="line-through text-gray-400">{product.previousPrice}</span>) */}
-                      </p>
-                    </div>
-                    <div className="px-6 py-4">
-                      {product.stock > 0 ? (
-                        <span className="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-green-700">
-                          Disponible
-                        </span>
-                      ) : (
-                        <span className="inline-block bg-red-100 rounded-full px-3 py-1 text-sm font-semibold text-red-700">
-                          No disponible
-                        </span>
-                      )}
-                    </div>
+                  <img className="w-full" src={product.image !== '' ? product.image : emptyProductImg} alt={product.name} />
+                  <div className="px-6 py-4 flex-grow">
+                    <div className="font-semibold text-xl mb-2 text-gray-800">{product.name}</div>
+                    <p className="text-gray-600 text-base">
+                      Precio: <span className="text-orange-500 font-bold">{product?.precio}</span>
+                    </p>
                   </div>
-                </Link>
-              ))}
-            </div>
-
-        }
+                  <div className="px-6 py-4">
+                    {product.stock > 0 ? (
+                      <span className="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-green-700">
+                        Disponible
+                      </span>
+                    ) : (
+                      <span className="inline-block bg-red-100 rounded-full px-3 py-1 text-sm font-semibold text-red-700">
+                        No disponible
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
