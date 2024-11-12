@@ -24,7 +24,7 @@ const ProductPlaca = () => {
   ];
  
   if (loading) {
-    return <ProductDetailSkeleton />; // Renderiza ProductDetailSkeleton cuando loading es true
+    return <ProductDetailSkeleton />; 
   }
 
   console.log(product);
