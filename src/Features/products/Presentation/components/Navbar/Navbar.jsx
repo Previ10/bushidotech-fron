@@ -133,12 +133,12 @@ export const Navbar = () => {
           <div className="flex items-center gap-4">
 
           {/* Botón de Favoritos */}
-          <button
+          {/* <button
             className="bg-gradient-to-r from-orange-500 to-orange-700 transition-all duration-200 text-white py-2 px-4 rounded-md flex items-center gap-2 group hover:from-orange-600 hover:to-orange-800 transform hover:scale-105"
           >
             <FaHeart className="text-xl text-white drop-shadow-sm cursor-pointer" />
             <span className="hidden sm:block group-hover:inline-block">Favoritos</span>
-          </button>
+          </button> */}
 
             {/* Botón compartir */}
             <div className="flex space-x-4 mt-0.8">
