@@ -2,11 +2,15 @@ import React from 'react'
 import{ Banner,Hero,Popup,Products,Subscribe,Testimonials,TopProducts} from '../components/exports'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useProductLocalStorage } from '../data/local/products_local_data_sources';
+import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
 
 
 export const Homepage = () => {
 
   const [orderPopup, setOrderPopup] = React.useState(false);
+  const { shoppingCart, cleanShoppingCart } = useProductLocalStorage();
+  const { user } = useAuthenticationStorage();
 
   const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
@@ -33,7 +37,11 @@ export const Homepage = () => {
     <Banner />
     <Subscribe />
     <Testimonials />
-    <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
+    <Popup  orderPopup={orderPopup} 
+        setOrderPopup={setOrderPopup} 
+        shoppingCart={shoppingCart} 
+        cleanShoppingCart={cleanShoppingCart} 
+        user={user}  />
   </div>
   )
 }

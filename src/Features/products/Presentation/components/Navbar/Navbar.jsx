@@ -22,12 +22,14 @@ import {
   WhatsappIcon
 } from "react-share";
 import { FaCheckCircle, FaTruck, FaShareAlt } from 'react-icons/fa';
-import { useProductLocalStorage } from "../../data/local/products_local_data_sources";
+// import { useProductLocalStorage } from "../../data/local/products_local_data_sources";
 import { useGetProductQueryHook } from "../../hooks/use_get_product_query_hook";
+import { useProductLocalStorage } from '../../data/local/products_local_data_sources';
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const { shoppingCart, cleanShoppingCart } = useProductLocalStorage();
+  console.log('SHOPING CART CLEAN',cleanShoppingCart);
   
   const [searchInput, setSearchInput] = useState(""); 
     const [shouldFetch, setShouldFetch] = useState(false); 
