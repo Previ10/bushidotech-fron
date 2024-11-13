@@ -1,11 +1,11 @@
 import { IoCloseOutline } from "react-icons/io5";
 import Logo from "../../../../../assets/logopopup.png";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Wallet } from "@mercadopago/sdk-react";
 import { UseCreatePreferenceMutationHook } from "../../hooks/use_create_preference_mutation_hook";
 
 
-export const Popup = ({ orderPopup, setOrderPopup, shoppingCart, cleanShoppingCart }) => {
+export const Popup = ({ orderPopup, setOrderPopup, shoppingCart, cleanShoppingCart, user }) => {
   const { mutate, data, loading, error } = UseCreatePreferenceMutationHook();
   const [preferenceId, setPreferenceId] = useState(null);
 
@@ -21,6 +21,13 @@ export const Popup = ({ orderPopup, setOrderPopup, shoppingCart, cleanShoppingCa
       console.error("Error al crear la preferencia de pago:", error);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      cleanShoppingCart();
+      setOrderPopup(false); 
+    }
+  }, [user, cleanShoppingCart, setOrderPopup]);
 
   const handleCleanCart = () => {
     cleanShoppingCart();

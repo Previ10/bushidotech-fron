@@ -366,7 +366,7 @@ export const Navbar = () => {
         handleLogOut={handleLogOut}
       />
 
-      <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} shoppingCart={shoppingCart} cleanShoppingCart={cleanShoppingCart} />
+      <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} shoppingCart={shoppingCart} cleanShoppingCart={cleanShoppingCart}    user={user}     />
       <PopupInitSession showModal={showInitSessionModal} setShowModal={setShowInitSessionModal} setShowRegisterModal={setShowRegisterModal} />
       <RegisterPopup showModal={showRegisterModal} setShowModal={setShowRegisterModal} />
     </div>

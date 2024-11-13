@@ -2,29 +2,35 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Slider from "react-slick";
 import { FaCheckCircle, FaTruck, FaShareAlt, FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa';
-
-
-
 import { useGetProductByIdQueryHook } from '../hooks/use_get_product_by_id_hook';
 import { useProductLocalStorage } from '../data/local/products_local_data_sources';
 import ProductDetailSkeleton from '../../../../core/utils/detailSqueletonLoader';
+import { useAuthenticationStorage } from '../../../user/data/local/user_local_data_sources';
+import LoginPromptModal from '../components/Popup/ErrorSesionPoup';
 
 const ProductPlaca = () => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: product, loading, error } = useGetProductByIdQueryHook(id);
   const { setProductsInShoppingCart } = useProductLocalStorage();
-  const handleAddProductToShoppingCart = () => {
-    setProductsInShoppingCart([product]);
-    console.log(product);
+  const { user } = useAuthenticationStorage();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
+  const handleAddProductToShoppingCart = () => {
+    if (user) {
+      setProductsInShoppingCart([product]);
+      console.log(product);
+    } else {
+      setIsLoginModalOpen(true);
+    }
   }
+
   const images = [
     product?.image
   ];
- 
+
   if (loading) {
-    return <ProductDetailSkeleton />; 
+    return <ProductDetailSkeleton />;
   }
 
   console.log(product);
@@ -39,6 +45,8 @@ const ProductPlaca = () => {
     nextArrow: <div style={{ fontSize: '40px', color: '#333' }}>&#10095;</div>,
     prevArrow: <div style={{ fontSize: '40px', color: '#333' }}>&#10094;</div>,
   };
+
+  const closeLoginModal = () => setIsLoginModalOpen(false); 
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -113,6 +121,8 @@ const ProductPlaca = () => {
               Sumar al Carrito
             </button>
           </div>
+          
+          <LoginPromptModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
 
           {/* <button className="w-full md:w-auto bg-orange-600 text-white text-lg px-8 py-4 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out shadow-lg mt-4"> 
             Comprar Ahora
